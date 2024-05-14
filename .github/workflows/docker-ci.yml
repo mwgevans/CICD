@@ -78,13 +78,13 @@ jobs:
                 type=semver,pattern={{major}}.{{minor}},value=${{ steps.taggerDryRun.outputs.new_tag }}
       - name: Minor version for each merge
         id: taggerFinal
-        if: ${{ github.ref == 'refs/head/master' }}
+        if: ${{ github.ref == 'refs/head/main' }}
         uses: anothrNick/github-tag-action@1.36.0
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             WITH_V: true
       - name: Create Release
-        if: ${{ github.ref == 'refs/head/master' }}
+        if: ${{ github.ref == 'refs/head/main' }}
         uses: ncipollo/release-action@v1
         with:
             tag: ${{ steps.taggerFinal.outputs.tag }}
