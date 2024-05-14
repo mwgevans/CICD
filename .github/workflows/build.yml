@@ -9,7 +9,7 @@ jobs:
         id: pwsh
         shell: pwsh
         run: |
-          if ($env:GITHUB_EVENT_NAME -eq pull_request){ $PreRelease = 'rc'} else { $PreRelease = 'beta'}
+          if ($env:GITHUB_EVENT_NAME -eq 'pull_request'){ $PreRelease = 'rc'} else { $PreRelease = 'beta'}
           echo "PreRelease=$PreRelease" >> $env:GITHUB_OUTPUT
       - name: Display
         shell: pwsh
