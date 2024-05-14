@@ -1,6 +1,13 @@
 name: Build
 on: [push, pull_request]
 jobs:
+  PowerShellDemo:
+    name: "PowerShell Demo"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Module
+        shell: pwsh
+        run: echo "Val2=Moe" >> $env:GITHUB_OUTPUT
   build:
     name: Build
     runs-on: ubuntu-latest
