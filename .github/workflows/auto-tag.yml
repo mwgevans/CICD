@@ -1,6 +1,9 @@
 name: Auto Tag my Application
 on: [push]
 concurrency: production
+permissions:
+    contents: write
+
 jobs:
   Patch:
     runs-on: ubuntu-latest
