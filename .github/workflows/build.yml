@@ -6,8 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build Module
+        id: pwsh
         shell: pwsh
         run: echo "Val2=Moe" >> $env:GITHUB_OUTPUT
+      - name: Display
+        shell: pwsh
+        run: echo ${{ steps.pwsh.outputs.Val2 }}
   build:
     name: Build
     runs-on: ubuntu-latest
