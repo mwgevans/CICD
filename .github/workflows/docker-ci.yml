@@ -29,9 +29,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-      # This is used to complete the identity challenge
-      # with sigstore/fulcio when running outside of PRs.
-      id-token: write
 
     steps:
       - name: Checkout repository
@@ -79,7 +76,21 @@ jobs:
                 type=ref,event=pr
                 type=semver,pattern={{version}},value=${{ steps.taggerDryRun.outputs.new_tag }}
                 type=semver,pattern={{major}}.{{minor}},value=${{ steps.taggerDryRun.outputs.new_tag }}
-
+      - name: Minor version for each merge
+        id: taggerFinal
+        if: ${{ github.ref == 'refs/head/master' }}
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            WITH_V: true
+      - name: Create Release
+        if: ${{ github.ref == 'refs/head/master' }}
+        uses: ncipollo/release-action@v1
+        with:
+            tag: ${{ steps.taggerFinal.outputs.tag }}
+            prerelease: false
+            #artifacts: "release.tar.gz,foo/*.txt"
+            #bodyFile: "body.md"
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
       - name: Build and push Docker image
