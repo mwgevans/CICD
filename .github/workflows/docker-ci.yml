@@ -99,6 +99,7 @@ jobs:
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
       - name: Sign the images with GitHub OIDC Token
+        if: ${{ 1==0 }}
         env:
           DIGEST: ${{ steps.build-and-push.outputs.digest }}
           TAGS: ${{ steps.meta.outputs.tags }}
